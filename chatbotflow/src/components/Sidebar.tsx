@@ -1,37 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { Node } from "reactflow";
+import { GetEditor, GetPicker } from "./Nodes";
 
-export default () => {
-  const onDragStart = (event: any, nodeType: any) => {
-    event.dataTransfer.setData("application/reactflow", nodeType);
-    event.dataTransfer.effectAllowed = "move";
-  };
+interface Props {
+  availableNodeTypes: string[];
+}
 
+export default (props: Props) => {
+  const { availableNodeTypes } = props;
   return (
-    <aside>
-      <div className="description">
-        You can drag these nodes to the pane on the right.
-      </div>
-      <div
-        className="dndnode input"
-        onDragStart={(event) => onDragStart(event, "input")}
-        draggable
-      >
-        Input Node
-      </div>
-      <div
-        className="dndnode"
-        onDragStart={(event) => onDragStart(event, "default")}
-        draggable
-      >
-        Default Node
-      </div>
-      <div
-        className="dndnode output"
-        onDragStart={(event) => onDragStart(event, "output")}
-        draggable
-      >
-        Output Node
-      </div>
+    <aside className="bg-slate-200 drop-shadow-md p-4">
+      {availableNodeTypes?.map((nodeType: string, _index: number) => {
+        return <GetPicker type={nodeType} />;
+      })}
     </aside>
   );
 };
